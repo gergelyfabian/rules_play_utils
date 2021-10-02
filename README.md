@@ -15,7 +15,7 @@ Provides the following features:
   
   Add the following to your `BUILD` file (assuming it's in your `public` folder).
   
-  ```
+  ```python
   load("@io_bazel_rules_play_utils//:unzip_files.bzl", "unzip_files")
   
   unzip_files(
@@ -33,17 +33,32 @@ Provides the following features:
   )
   ```
   
+  Then use the new target in your service:
+  
+  ```python
+  scala_binary(
+      name = "service",
+      # ... Cut ...
+      resources = [
+          # ... Cut ...
+          "//public:unpack_webjar_bootstrap",
+          # ... Cut ...
+      ],
+      # ... Cut ...
+  )
+  ```
+  
   Webjar contents will be available at:
   
-  * `lib/bootstrap/css/bootstrap.css`
-  * `lib/bootstrap/css/bootstrap.css.map`
+  * `public/lib/bootstrap/css/bootstrap.css`
+  * `public/lib/bootstrap/css/bootstrap.css.map`
   * etc.
 
 ## Setup
 
 Add to your `WORKSPACE`:
 
-```
+```python
 rules_play_utils_version = "19ef18a7aeb4e7807de1edd9cfa32a9d81189e4f"
 
 http_archive(
